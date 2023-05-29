@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 class EventPractice extends Component {
 
     state = {
+        username : '',
         message : ''
     }
 /*  생성자를 통해서 컴포넌트와 이벤트 메서드를 서로 바인딩 시킴 
@@ -31,27 +32,43 @@ class EventPractice extends Component {
     */
     handleChange = (e) => {
         this.setState({
-            message : e.target.value
+            [e.target.name] : e.target.value
         });
     }
 
     handleClick = () => {
-        alert(this.state.message);
+        alert(this.state.username + ': ' + this.state.message);
         this.setState({
-            message : ''
+            message : '',
+            username : ''
         });
+    }
+
+    handleKeyPress = (e) => {
+        if(e.key === 'Enter'){
+            this.handleClick();
+        }
     }
 
     render() {
         return (
             <div>
-                <h1>{this.state.message}</h1>
-                <input 
-                 type='text'
-                 name='message'
-                 placeholder='아무거나 입력하세요'
+                <h1>이벤트 연습</h1>
+                 <input
+                 type="text"
+                 name="username"
+                 placeholder='사용자명'
+                 value={this.state.username}
+                 onChange={this.handleChange}
+                 >
+                 </input>
+                 <input 
+                 type="text"
+                 name="message"
+                 placeholder="아무거나 입력하세요"
                  value={this.state.message}
                  onChange={this.handleChange}
+                 onKeyPress={this.handleKeyPress}
                  ></input>
                  <button onClick={this.handleClick}>확인</button>
 
